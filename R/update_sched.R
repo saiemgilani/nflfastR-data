@@ -16,9 +16,10 @@ games <- readRDS(url("https://github.com/leesharpe/nfldata/blob/master/data/game
 save_sched <- function(s, all_games) {
   g <- all_games %>% dplyr::filter(season == s)
   saveRDS(g, glue::glue("schedules/sched_{s}.rds"))
+  arrow::write_parquet(g, glue::glue("schedules/sched_{s}.parquet"))
 }
 
-save_sched(current_season, games)
+# save_sched(current_season, games)
 
 # update all seasons in case bugs were fixed
 # purrr::walk(1999:2020, save_sched, games)
